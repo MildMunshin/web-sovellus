@@ -1,0 +1,44 @@
+<!-- <!DOCTYPE html>
+<html
+<body>
+    <h1>Tervetuloa!</h1>
+    <p>Valitse toiminto:</p>
+    <ul>
+        <li><a href="/">Kirjaudu sisään</a></li>
+        <li><a href="/register">Luo uusi tunnus</a></li>
+    </ul>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Kirjautuminen</title>
+</head>
+
+<body>
+  {% if session.username %}
+  <p>
+    Olet kirjautunut nimellä {{ session.username }}
+  </p>
+  <p>
+    <a href="/logout">Kirjaudu ulos</a>
+  </p>
+  {% else %}
+  <form action="/login" method="post">
+    <p>
+      Tunnus: <br />
+      <input type="text" name="username" />
+    </p>
+    <p>
+      Salasana: <br />
+      <input type="password" name="password" />
+    </p>
+    <input type="submit" value="Kirjaudu" />
+  </form>
+  {% endif %}
+</body>
+
+</html>
