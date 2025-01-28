@@ -15,16 +15,16 @@
 <html>
 
 <head>
-  <title>Kirjautuminen</title>
+  <title>Login</title>
 </head>
 
 <body>
   {% if session.username %}
   <p>
-    Olet kirjautunut nimellä {{ session.username }}
+    You have logged in as {{ session.username }}
   </p>
   <p>
-    <a href="/logout">Kirjaudu ulos</a>
+    <a href="/logout">Log out</a>
   </p>
   {% else %}
   <form action="/login" method="post">

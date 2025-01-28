@@ -34,19 +34,22 @@
 <!DOCTYPE html>
 <html
 <body>
-    <h1>Tervetuloa!</h1>
+    <h1>Welcome!</h1>
     {% if session.username %}
     <p>
-      Olet kirjautunut nimellä {{ session.username }}
+      You have logged in as {{ session.username }}
     </p>
     <p>
-      <a href="/logout">Kirjaudu ulos</a>
+      <a href="/profile">Profile</a>
+    </p>
+    <p>
+      <a href="/logout">Log out</a>
     </p>
     {% else %}
     <p>Valitse toiminto:</p>
     <ul>
-        <li><a href="/login_page">Kirjaudu sisään</a></li>
-        <li><a href="/register">Luo uusi tunnus</a></li>
+        <li><a href="/login_page">Login in</a></li>
+        <li><a href="/register">Create new profile</a></li>
     </ul>
     {% endif %}
 </body>
