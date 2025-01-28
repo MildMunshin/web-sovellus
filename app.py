@@ -2,8 +2,7 @@ import sqlite3
 from flask import Flask
 from flask import redirect, render_template, request, session
 from werkzeug.security import generate_password_hash, check_password_hash
-import config
-import db
+import config, db, users
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
@@ -53,8 +52,17 @@ def login():
 
 @app.route("/logout")
 def logout():
-    del session["username"]
+    if "user_id" in session:
+        del session["user_id"]
+        del session["username"]
     return redirect("/")
+
+@app.route("/user/<int:user_id>")
+def show_user(user_id):
+    user = users.get_user(user_id)
+#    if not user:
+#        abort(404)
+    return render_template("show_user.html")
 
 @app.route("/add_image", methods=["GET", "POST"])
 def add_image():
