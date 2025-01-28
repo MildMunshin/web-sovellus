@@ -57,6 +57,15 @@ def logout():
         del session["username"]
     return redirect("/")
 
+@app.route("/page1")
+def page1():
+    session["test"] = "aybabtu"
+    return "Istunto asetettu"
+
+@app.route("/page2")
+def page2():
+    return "Tieto istunnosta: " + session["test"]
+
 @app.route("/user/<int:user_id>")
 def show_user(user_id):
     user = users.get_user(user_id)
