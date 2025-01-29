@@ -7,8 +7,20 @@
     <p>
       You have logged in as {{ session.username }}
     </p>
+
+    <form action="/add_image" method="post" enctype="multipart/form-data">
+      <p>
+        Choose profile picture: <input type="file" name="image" accept=".jpg" />
+      </p>
+      <input type="submit" value="Upload image" />
+    </form>
+
+    {% if user.has_image %}
+    <img src="/image/{{ user.id }}" />
+    {% endif %}
+
     <p>
-      <a href="/logout">Log out</a>
+      <a href="/">Home page</a>
     </p>
     {% else %}
     <p>Valitse toiminto:</p>

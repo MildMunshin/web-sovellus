@@ -1,6 +1,6 @@
 import sqlite3
 from flask import Flask
-from flask import redirect, render_template, request, session
+from flask import redirect, render_template, request, session, make_response
 from werkzeug.security import generate_password_hash, check_password_hash
 import config, db, users
 
@@ -92,7 +92,8 @@ def show_user(user_id):
     user = users.get_user(user_id)
     if not user:
         abort(404)
-    return render_template("show_user.html")
+    return render_template("show_user.html", user=user)
+
 
 # @app.route("/user/<int:user_id>")
 # def show_user(user_id):
@@ -103,6 +104,9 @@ def show_user(user_id):
 #         return "Käyttäjää ei löytynyt", 404
 #     return render_template("show_user.html", user=user)
 
+def require_login():
+    if "user_id" not in session:
+        abort(403)
 
 @app.route("/add_image", methods=["GET", "POST"])
 def add_image():
@@ -123,3 +127,13 @@ def add_image():
         user_id = session["user_id"]
         users.update_image(user_id, image)
         return redirect("/user/" + str(user_id))
+    
+@app.route("/image/<int:user_id>")
+def show_image(user_id):
+    image = users.get_image(user_id)
+    if not image:
+        abort(404)
+
+    response = make_response(bytes(image))
+    response.headers.set("Content-Type", "image/jpeg")
+    return response
