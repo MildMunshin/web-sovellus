@@ -40,13 +40,13 @@
       You have logged in as {{ session.username }}
     </p>
     <p>
-      <a href="/show_user">Profile</a>
+      <a href="/user/{{ session['user_id'] }}">Profile</a>
     </p>
     <p>
       <a href="/logout">Log out</a>
     </p>
     {% else %}
-    <p>Valitse toiminto:</p>
+    <p>Choose option:</p>
     <ul>
         <li><a href="/login_page">Login in</a></li>
         <li><a href="/register">Create new profile</a></li>

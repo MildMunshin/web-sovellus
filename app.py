@@ -44,11 +44,40 @@ def login():
     sql = "SELECT password_hash FROM users WHERE username = ?"
     password_hash = db.query(sql, [username])[0][0]
 
+    sql = "SELECT id FROM users WHERE username = ?"
+    user_id = db.query(sql, [username])[0][0]
+    print(user_id)
+
     if check_password_hash(password_hash, password):
         session["username"] = username
+        session["user_id"] = user_id
         return redirect("/")
     else:
         return "VIRHE: väärä tunnus tai salasana"
+
+# @app.route("/login", methods=["POST"])
+# def login():
+#     username = request.form["username"]
+#     password = request.form["password"]
+    
+#     # Hae käyttäjän ID ja salasana yhdellä kyselyllä
+#     sql = "SELECT id, password_hash FROM users WHERE username = ?"
+#     result = db.query(sql, [username])
+    
+#     # Tarkista, löytyikö käyttäjä
+#     if not result:
+#         return "VIRHE: väärä tunnus tai salasana"
+
+#     user_id, password_hash = result[0]
+
+#     # Vertaile salasanaa
+#     if check_password_hash(password_hash, password):
+#         # Tallenna käyttäjän tiedot sessioon
+#         session["username"] = username
+#         session["user_id"] = user_id
+#         return redirect("/")
+#     else:
+#         return "VIRHE: väärä tunnus tai salasana"
 
 @app.route("/logout")
 def logout():
@@ -57,21 +86,23 @@ def logout():
         del session["username"]
     return redirect("/")
 
-@app.route("/page1")
-def page1():
-    session["test"] = "aybabtu"
-    return "Istunto asetettu"
-
-@app.route("/page2")
-def page2():
-    return "Tieto istunnosta: " + session["test"]
 
 @app.route("/user/<int:user_id>")
 def show_user(user_id):
     user = users.get_user(user_id)
-#    if not user:
-#        abort(404)
+    if not user:
+        abort(404)
     return render_template("show_user.html")
+
+# @app.route("/user/<int:user_id>")
+# def show_user(user_id):
+#     if "user_id" not in session or session["user_id"] != user_id:
+#         return redirect("/login_page")
+#     user = users.get_user(user_id)
+#     if not user:
+#         return "Käyttäjää ei löytynyt", 404
+#     return render_template("show_user.html", user=user)
+
 
 @app.route("/add_image", methods=["GET", "POST"])
 def add_image():
