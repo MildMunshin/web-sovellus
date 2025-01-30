@@ -8,6 +8,13 @@
       You have logged in as {{ session.username }}
     </p>
 
+    {% else %}
+    <p>Valitse toiminto:</p>
+    <ul>
+        <li><a href="/login_page">Login in</a></li>
+        <li><a href="/register">Create new profile</a></li>
+    </ul>
+
     <form action="/add_image" method="post" enctype="multipart/form-data">
       <p>
         Choose profile picture: <input type="file" name="image" accept=".jpg" />
@@ -15,19 +22,23 @@
       <input type="submit" value="Upload image" />
     </form>
 
+    {% endif %}
+
     {% if user.has_image %}
     <img src="/image/{{ user.id }}" />
+
+    {% else %}
+    <form action="/add_image" method="post" enctype="multipart/form-data">
+      <p>
+        Choose profile picture: <input type="file" name="image" accept=".jpg" />
+      </p>
+      <input type="submit" value="Upload image" />
+    </form>
     {% endif %}
 
     <p>
       <a href="/">Home page</a>
     </p>
-    {% else %}
-    <p>Valitse toiminto:</p>
-    <ul>
-        <li><a href="/login_page">Login in</a></li>
-        <li><a href="/register">Create new profile</a></li>
-    </ul>
-    {% endif %}
+
 </body>
 </html>
