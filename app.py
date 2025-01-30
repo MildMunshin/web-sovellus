@@ -4,6 +4,8 @@ from flask import Flask
 from flask import redirect, render_template, request, session, make_response, redirect, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
 import config, db, users
+from repositories.songs_repository import get_songs
+
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
@@ -14,9 +16,14 @@ COVER_FOLDER = 'static/cover_uploads/'
 app.config['AUDIO_FOLDER'] = AUDIO_FOLDER
 app.config['COVER_FOLDER'] = COVER_FOLDER
 
+# @app.route("/")
+# def index():
+#     return render_template("index.html")
+
 @app.route("/")
 def index():
-    return render_template("index.html")
+    songs = get_songs()
+    return render_template("index.html", songs=songs)
 
 @app.route("/login_page")
 def login_page():
@@ -163,6 +170,7 @@ def upload():
     if file and cover:
         filename = file.filename
         covername = cover.filename
+        user_id = session["user_id"]
 
         # Tiedostojen tallennus
         audio_file_path = os.path.join(app.config['AUDIO_FOLDER'], filename)
@@ -176,7 +184,7 @@ def upload():
         cursor = conn.cursor()
         cursor.execute('''
             INSERT INTO songs (user_id, title, artist, audio_file_path, genre, image_file_path) 
-            VALUES (?, ?, ?, ?, ?, ?)''', (1, title, artist, audio_file_path, genre, image_file_path))
+            VALUES (?, ?, ?, ?, ?, ?)''', (user_id, title, artist, audio_file_path, genre, image_file_path))
         conn.commit()
         conn.close()
 

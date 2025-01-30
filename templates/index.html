@@ -52,5 +52,29 @@
         <li><a href="/register">Create new profile</a></li>
     </ul>
     {% endif %}
+
+    <h1>Kaikki kappaleet</h1>
+    <ul>
+        {% for song in songs %}
+        <li>
+            <img src="{{ song.image_file_path }}" alt="Kansikuva" width="100">
+            <strong>{{ song.title }}</strong> – {{ song.artist }} ({{ song.genre }})
+            <br>
+            <audio controls>
+                {% if song.audio_file_path.endswith('.mp3') %}
+                    <source src="{{ song.audio_file_path }}" type="audio/mpeg">
+                {% elif song.audio_file_path.endswith('.wav') %}
+                    <source src="{{ song.audio_file_path }}" type="audio/wav">
+                {% else %}
+                    <p>Tiedostotyyppi ei tuettu.</p>
+                {% endif %}
+                Selaimesi ei tue äänitiedostoja.
+            </audio>
+            <p>Kesto: {{ song.duration }} sekuntia</p>
+        </li>
+        {% endfor %}
+    </ul>
+    
+
 </body>
 </html>
