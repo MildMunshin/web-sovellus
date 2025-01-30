@@ -137,3 +137,7 @@ def show_image(user_id):
     response = make_response(bytes(image))
     response.headers.set("Content-Type", "image/jpeg")
     return response
+
+@app.route("/upload_song")
+def upload_song():
+    return render_template("upload_song.html")

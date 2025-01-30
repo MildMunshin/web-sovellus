@@ -1,9 +1,10 @@
 
 <!DOCTYPE html>
-<html
+<html>
 <body>
     <h1>PrOFILE!!</h1>
-    {% if session.username %}
+
+    <!-- {% if session.username %}
     <p>
       You have logged in as {{ session.username }}
     </p>
@@ -22,7 +23,7 @@
       <input type="submit" value="Upload image" />
     </form>
 
-    {% endif %}
+    {% endif %} -->
 
     {% if user.has_image %}
     <img src="/image/{{ user.id }}" />
@@ -39,6 +40,12 @@
     <p>
       <a href="/">Home page</a>
     </p>
+
+    <p>
+      <a href="/upload_song">Upload a song</a>
+    </p>
+
+
 
 </body>
 </html>
