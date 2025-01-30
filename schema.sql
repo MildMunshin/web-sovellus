@@ -17,6 +17,6 @@ CREATE TABLE songs (
     image_file_path TEXT NOT NULL,
     upload_date DATETIME DEFAULT CURRENT_TIMESTAMP,
     genre TEXT CHECK (LENGTH(genre) > 0),
-    duration INTEGER CHECK (duration > 0), cover_image TEXT,
+    duration INTEGER CHECK (duration > 0),
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
