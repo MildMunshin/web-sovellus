@@ -1,11 +1,18 @@
 import sqlite3
+import os
 from flask import Flask
-from flask import redirect, render_template, request, session, make_response
+from flask import redirect, render_template, request, session, make_response, redirect, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
 import config, db, users
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
+
+AUDIO_FOLDER = 'static/audio_uploads/'
+COVER_FOLDER = 'static/cover_uploads/'
+
+app.config['AUDIO_FOLDER'] = AUDIO_FOLDER
+app.config['COVER_FOLDER'] = COVER_FOLDER
 
 @app.route("/")
 def index():
@@ -141,3 +148,37 @@ def show_image(user_id):
 @app.route("/upload_song")
 def upload_song():
     return render_template("upload_song.html")
+
+
+
+@app.route('/upload', methods=['POST'])
+def upload():
+    title = request.form['title']
+    artist = request.form['artist']
+    genre = request.form['genre']
+    
+    file = request.files['file']
+    cover = request.files['cover']
+    
+    if file and cover:
+        filename = file.filename
+        covername = cover.filename
+
+        # Tiedostojen tallennus
+        audio_file_path = os.path.join(app.config['AUDIO_FOLDER'], filename)
+        image_file_path = os.path.join(app.config['COVER_FOLDER'], covername)
+
+        file.save(audio_file_path)
+        cover.save(image_file_path)
+
+        # Tallenna tietokantaan
+        conn = sqlite3.connect('database.db')
+        cursor = conn.cursor()
+        cursor.execute('''
+            INSERT INTO songs (user_id, title, artist, audio_file_path, genre, image_file_path) 
+            VALUES (?, ?, ?, ?, ?, ?)''', (1, title, artist, audio_file_path, genre, image_file_path))
+        conn.commit()
+        conn.close()
+
+        return redirect(url_for('index'))
+
