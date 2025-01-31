@@ -4,27 +4,6 @@
 <body>
     <h1>PrOFILE!!</h1>
 
-    <!-- {% if session.username %}
-    <p>
-      You have logged in as {{ session.username }}
-    </p>
-
-    {% else %}
-    <p>Choose option:</p>
-    <ul>
-        <li><a href="/login_page">Login in</a></li>
-        <li><a href="/register">Create new profile</a></li>
-    </ul>
-
-    <form action="/add_image" method="post" enctype="multipart/form-data">
-      <p>
-        Choose profile picture: <input type="file" name="image" accept=".jpg" />
-      </p>
-      <input type="submit" value="Upload image" />
-    </form>
-
-    {% endif %} -->
-
     {% if user.has_image %}
     <img src="/image/{{ user.id }}" />
 

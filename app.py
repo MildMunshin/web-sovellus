@@ -16,9 +16,6 @@ COVER_FOLDER = 'static/cover_uploads/'
 app.config['AUDIO_FOLDER'] = AUDIO_FOLDER
 app.config['COVER_FOLDER'] = COVER_FOLDER
 
-# @app.route("/")
-# def index():
-#     return render_template("index.html")
 
 @app.route("/")
 def index():
@@ -69,29 +66,6 @@ def login():
     else:
         return "VIRHE: väärä tunnus tai salasana"
 
-# @app.route("/login", methods=["POST"])
-# def login():
-#     username = request.form["username"]
-#     password = request.form["password"]
-    
-#     # Hae käyttäjän ID ja salasana yhdellä kyselyllä
-#     sql = "SELECT id, password_hash FROM users WHERE username = ?"
-#     result = db.query(sql, [username])
-    
-#     # Tarkista, löytyikö käyttäjä
-#     if not result:
-#         return "VIRHE: väärä tunnus tai salasana"
-
-#     user_id, password_hash = result[0]
-
-#     # Vertaile salasanaa
-#     if check_password_hash(password_hash, password):
-#         # Tallenna käyttäjän tiedot sessioon
-#         session["username"] = username
-#         session["user_id"] = user_id
-#         return redirect("/")
-#     else:
-#         return "VIRHE: väärä tunnus tai salasana"
 
 @app.route("/logout")
 def logout():
@@ -109,15 +83,6 @@ def show_user(user_id):
         abort(404)
     return render_template("show_user.html", user=user, songs=songs)
 
-
-# @app.route("/user/<int:user_id>")
-# def show_user(user_id):
-#     if "user_id" not in session or session["user_id"] != user_id:
-#         return redirect("/login_page")
-#     user = users.get_user(user_id)
-#     if not user:
-#         return "Käyttäjää ei löytynyt", 404
-#     return render_template("show_user.html", user=user)
 
 def require_login():
     if "user_id" not in session:
