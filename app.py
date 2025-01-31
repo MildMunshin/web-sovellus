@@ -83,6 +83,13 @@ def show_user(user_id):
         abort(404)
     return render_template("show_user.html", user=user, songs=songs)
 
+@app.route("/song/<int:id>")
+def show_song(id):
+    song = users.get_song(id)
+#    if not user:
+#        abort(404)
+    return render_template("show_song.html", song=song)
+
 
 def require_login():
     if "user_id" not in session:
