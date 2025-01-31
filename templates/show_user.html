@@ -45,6 +45,28 @@
       <a href="/upload_song">Upload a song</a>
     </p>
 
+    <h1>{{ user.username }}'s tracks:</h1>
+    <ul>
+        {% for song in songs %}
+        <li>
+            <img src="{{ song.image_file_path }}" alt="Kansikuva" width="100">
+            <strong>{{ song.artist }}</strong> – {{ song.title }}
+            <br>
+            <audio controls>
+                {% if song.audio_file_path.endswith('.mp3') %}
+                    <source src="{{ song.audio_file_path }}" type="audio/mpeg">
+                {% elif song.audio_file_path.endswith('.wav') %}
+                    <source src="{{ song.audio_file_path }}" type="audio/wav">
+                {% else %}
+                    <p>Tiedostotyyppi ei tuettu.</p>
+                {% endif %}
+                Selaimesi ei tue äänitiedostoja.
+            </audio>
+            <!-- <p>Kesto: {{ song.duration }} sekuntia</p> -->
+        </li>
+        {% endfor %}
+    </ul>
+
 
 
 </body>

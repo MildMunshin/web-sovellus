@@ -1,38 +1,6 @@
-<!-- <!DOCTYPE html>
-<html>
-
-<head>
-  <title>Kirjautuminen</title>
-</head>
-
-<body>
-  {% if session.username %}
-  <p>
-    Olet kirjautunut nimellä {{ session.username }}
-  </p>
-  <p>
-    <a href="/logout">Kirjaudu ulos</a>
-  </p>
-  {% else %}
-  <form action="/login" method="post">
-    <p>
-      Tunnus: <br />
-      <input type="text" name="username" />
-    </p>
-    <p>
-      Salasana: <br />
-      <input type="password" name="password" />
-    </p>
-    <input type="submit" value="Kirjaudu" />
-  </form>
-  {% endif %}
-</body>
-
-</html> -->
-
 
 <!DOCTYPE html>
-<html
+<html>
 <body>
     <h1>Welcome!</h1>
     {% if session.username %}
@@ -53,12 +21,12 @@
     </ul>
     {% endif %}
 
-    <h1>Kaikki kappaleet</h1>
+    <h1>All tracks</h1>
     <ul>
         {% for song in songs %}
         <li>
             <img src="{{ song.image_file_path }}" alt="Kansikuva" width="100">
-            <strong>{{ song.title }}</strong> – {{ song.artist }} ({{ song.genre }})
+            <strong>{{ song.artist }}</strong> – {{ song.title }}
             <br>
             <audio controls>
                 {% if song.audio_file_path.endswith('.mp3') %}
@@ -70,7 +38,7 @@
                 {% endif %}
                 Selaimesi ei tue äänitiedostoja.
             </audio>
-            <p>Kesto: {{ song.duration }} sekuntia</p>
+            <!-- <p>Kesto: {{ song.duration }} sekuntia</p> -->
         </li>
         {% endfor %}
     </ul>

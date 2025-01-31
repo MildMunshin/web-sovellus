@@ -1,28 +1,28 @@
 import sqlite3
-from random import choice
 import db
 
-# def get_songs(sort_by="random"):
-#     sql = ("SELECT * FROM songs")
-#     songs = db.session.execute(sql).fetchall()
-    
-#     # if sort_by == "random":
-#     #     return sorted(songs, key=lambda x: choice([0, 1]))
-#     # elif sort_by == "title":
-#     #     return sorted(songs, key=lambda x: x.title.lower())
-#     # elif sort_by == "artist":
-#     #     return sorted(songs, key=lambda x: x.artist.lower())
-
-#     return songs
-
+#Meneekö nämä nyt db.py:n vai suoraan database.db:n kautta, tarkista tämä vielä kuntoon
 
 def get_songs():
-    connection = sqlite3.connect("database.db")  # Oletetaan, että tietokanta on nimeltään database.db
-    connection.row_factory = sqlite3.Row  # Tämä palauttaa tulokset sanakirjoina
+    connection = sqlite3.connect("database.db")
+    connection.row_factory = sqlite3.Row #sanakirjamuodossa
     cursor = connection.cursor()
 
-    cursor.execute("SELECT * FROM songs")  # Haetaan kaikki kappaleet
+    cursor.execute("SELECT * FROM songs")
     songs = cursor.fetchall()
 
     connection.close()
-    return songs  # Nyt jokainen song on sanakirja, ei tuple!
+    return songs
+
+def get_user_songs(user):
+    connection = sqlite3.connect("database.db")
+    connection.row_factory = sqlite3.Row
+    cursor = connection.cursor()
+
+    user_id = user["id"] if isinstance(user, sqlite3.Row) else user #poimitaan käyttäjä_id sanakirjasta
+
+    cursor.execute("SELECT * FROM songs WHERE user_id = ?", (user_id,))
+    songs = cursor.fetchall()
+
+    connection.close()
+    return songs

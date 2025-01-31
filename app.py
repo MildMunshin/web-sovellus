@@ -4,7 +4,7 @@ from flask import Flask
 from flask import redirect, render_template, request, session, make_response, redirect, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
 import config, db, users
-from repositories.songs_repository import get_songs
+from repositories.songs_repository import get_songs, get_user_songs
 
 
 app = Flask(__name__)
@@ -104,9 +104,10 @@ def logout():
 @app.route("/user/<int:user_id>")
 def show_user(user_id):
     user = users.get_user(user_id)
+    songs = get_user_songs(user)
     if not user:
         abort(404)
-    return render_template("show_user.html", user=user)
+    return render_template("show_user.html", user=user, songs=songs)
 
 
 # @app.route("/user/<int:user_id>")
