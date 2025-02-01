@@ -7,14 +7,14 @@
   <strong>{{ song.artist }}</strong> – {{ song.title }}
   <br>
   <audio controls>
-      {% if song.audio_file_path.endswith('.mp3') %}
-      <source src="{{ url_for('static', filename=song.audio_file_path.split('static/')[-1]) }}" type="audio/mpeg">
-      {% elif song.audio_file_path.endswith('.wav') %}
-      <source src="{{ url_for('static', filename=song.audio_file_path.split('static/')[-1]) }}" type="audio/wav">
-      {% else %}
-          <p>Tiedostotyyppi ei tuettu.</p>
-      {% endif %}
-      Selaimesi ei tue äänitiedostoja.
+    {% if song.audio_file_path.endswith('.mp3') %}
+    <source src="{{ url_for('static', filename=song.audio_file_path.split('static/')[-1]) }}" type="audio/mpeg">
+    {% elif song.audio_file_path.endswith('.wav') %}
+    <source src="{{ url_for('static', filename=song.audio_file_path.split('static/')[-1]) }}" type="audio/wav">
+    {% else %}
+        <p>Tiedostotyyppi ei tuettu.</p>
+    {% endif %}
+    Selaimesi ei tue äänitiedostoja.
   </audio>
 </body>
 
