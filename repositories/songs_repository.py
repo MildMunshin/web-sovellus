@@ -1,7 +1,8 @@
 import sqlite3
 import db
 
-#Meneekö nämä nyt db.py:n vai suoraan database.db:n kautta, tarkista tämä vielä kuntoon
+#Meneekö nämä nyt db.py:n vai suoraan database.db:n kautta? tarkista tämä vielä kuntoon
+#fixaa samanlaiseksi kuin users.py-tiedostossa
 
 def get_songs():
     connection = sqlite3.connect("database.db")
