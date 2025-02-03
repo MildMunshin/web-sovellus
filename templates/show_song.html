@@ -2,9 +2,9 @@
 <!DOCTYPE html>
 <html>
 <body>
-  <h1>Show song</h1>
+  <h1>{{ song.title }}</h1>
   <img src="{{ url_for('static', filename=song.image_file_path.split('static/')[-1]) }}" alt="Kansikuva" width="100">
-  <strong><a href="/user/{{ song.user_id }}">{{ song.artist }}</a></strong> – {{ song.title }}
+  <strong><a href="/user/{{ song.user_id }}">{{ song.artist }}</a></strong> – {{ song.title }}</a>
   <br>
   <audio controls>
     {% if song.audio_file_path.endswith('.mp3') %}

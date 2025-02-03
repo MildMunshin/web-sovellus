@@ -29,7 +29,7 @@
         {% for song in songs %}
         <li>
           <img src="{{ url_for('static', filename=song.image_file_path.split('static/')[-1]) }}" alt="Kansikuva" width="100">
-          <a href="/song/{{ song.id }}">{{ song.artist }} – {{ song.title }}</a>
+          <strong>{{ song.artist }}</a></strong> – <a href="/song/{{ song.id }}">{{ song.title }}</a>
           <br>
           <audio controls>
             {% if song.audio_file_path.endswith('.mp3') %}
