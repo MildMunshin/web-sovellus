@@ -1,0 +1,1 @@
+- päivitä tietokannat niin, että kaikki oleelliset tiedot poistuvat kun dataa poistetaan (cascade)
