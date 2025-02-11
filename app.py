@@ -3,7 +3,7 @@ import os
 from flask import Flask
 from flask import redirect, render_template, request, session, make_response, redirect, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
-import config, db, users
+import config, db, users, forum
 from repositories.songs_repository import get_songs, get_user_songs
 
 
@@ -86,9 +86,10 @@ def show_user(user_id):
 @app.route("/song/<int:id>")
 def show_song(id):
     song = users.get_song(id)
+    threads = forum.get_threads(id)
 #    if not user:
 #        abort(404)
-    return render_template("show_song.html", song=song)
+    return render_template("show_song.html", song=song, threads=threads)
 
 
 def require_login():
@@ -118,8 +119,8 @@ def add_image():
 @app.route("/image/<int:user_id>")
 def show_image(user_id):
     image = users.get_image(user_id)
-    if not image:
-        abort(404)
+    # if not image:
+    #     abort(404)
 
     response = make_response(bytes(image))
     response.headers.set("Content-Type", "image/jpeg")
@@ -158,6 +159,13 @@ def upload():
         cursor.execute('''
             INSERT INTO songs (user_id, title, artist, audio_file_path, genre, image_file_path) 
             VALUES (?, ?, ?, ?, ?, ?)''', (user_id, title, artist, audio_file_path, genre, image_file_path))
+        conn.commit()
+        conn.close()
+
+        # Tallenna uusi thread tietokantaan
+        conn = sqlite3.connect('database.db')
+        cursor = conn.cursor()
+        cursor.execute('INSERT INTO threads DEFAULT VALUES;')
         conn.commit()
         conn.close()
 
