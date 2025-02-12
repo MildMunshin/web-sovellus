@@ -1,10 +1,26 @@
 import db
 
-def get_threads(id):
+def get_thread(id):
     sql = """SELECT t.id
              FROM threads t
              WHERE t.id = ?"""
+    result = db.query(sql, [id])
+    return result[0]
+
+
+def add_message(content, user_id, thread_id):
+    sql = """INSERT INTO messages (content, sent_at, user_id, thread_id)
+             VALUES (?, datetime('now'), ?, ?)"""
+    db.execute(sql, [content, user_id, thread_id])
+
+def get_messages(id):
+    sql = """SELECT m.id, m.content, m.sent_at, m.user_id, u.username
+             FROM messages m, users u
+             WHERE m.user_id = u.id AND m.thread_id = ?
+             ORDER BY m.id"""
     return db.query(sql, [id])
+
+
 
 
 # def get_threads(id):

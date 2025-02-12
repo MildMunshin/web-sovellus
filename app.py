@@ -86,11 +86,20 @@ def show_user(user_id):
 @app.route("/song/<int:id>")
 def show_song(id):
     song = users.get_song(id)
-    threads = forum.get_threads(id)
+    thread = forum.get_thread(id)
+    messages = forum.get_messages(id)
 #    if not user:
 #        abort(404)
-    return render_template("show_song.html", song=song, threads=threads)
+    return render_template("show_song.html", song=song, thread=thread, messages=messages)
 
+@app.route("/new_message", methods=["POST"])
+def new_message():
+    content = request.form["content"]
+    user_id = session["user_id"]
+    thread_id = request.form["thread_id"]
+
+    forum.add_message(content, user_id, thread_id)
+    return redirect("/song/" + str(thread_id))
 
 def require_login():
     if "user_id" not in session:
