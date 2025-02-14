@@ -20,3 +20,13 @@ CREATE TABLE songs (
     duration INTEGER CHECK (duration > 0),
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
+CREATE TABLE messages (
+    id INTEGER PRIMARY KEY,
+    content TEXT,
+    sent_at TEXT,
+    user_id INTEGER REFERENCES users,
+    thread_id INTEGER REFERENCES threads
+);
+CREATE TABLE threads (
+    id INTEGER PRIMARY KEY
+);
