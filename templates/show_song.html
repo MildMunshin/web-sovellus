@@ -2,6 +2,11 @@
 <!DOCTYPE html>
 <html>
 <body>
+  
+  <p>
+    <a href="/">Home page</a>
+  </p>
+
   <h1>{{ song.title }}</h1>
   <img src="{{ url_for('static', filename=song.image_file_path.split('static/')[-1]) }}" alt="Kansikuva" width="100">
   <strong><a href="/user/{{ song.user_id }}">{{ song.artist }}</a></strong> – {{ song.title }}</a>
