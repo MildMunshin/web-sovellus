@@ -4,7 +4,7 @@ from flask import Flask
 from flask import redirect, render_template, request, session, make_response, redirect, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
 import config, db, users, forum
-from repositories.songs_repository import get_songs, get_user_songs
+from repositories.songs_repository import get_songs, get_user_songs, delete_song_from_db
 
 
 app = Flask(__name__)
@@ -139,6 +139,12 @@ def show_image(user_id):
 def upload_song():
     return render_template("upload_song.html")
 
+@app.route("/delete_song/<int:id>", methods=["POST"])
+def delete_song(id):
+    delete_song_from_db(id)
+    user_id = session["user_id"]
+    return redirect("/user/" + str(user_id))
+
 
 
 @app.route('/upload', methods=['POST'])
@@ -179,4 +185,5 @@ def upload():
         conn.close()
 
         return redirect(url_for('index'))
+
 

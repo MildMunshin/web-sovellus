@@ -17,6 +17,15 @@
     Selaimesi ei tue äänitiedostoja.
   </audio>
 
+  {{ song.id }}
+
+  {% if song.user_id == session.user_id %}
+  <form action="/delete_song/{{ song.id }}" method="post"
+  onsubmit="return confirm('Are you sure you want to delete this song?');">
+  <button type="submit">🗑 Delete</button>
+  </form>
+  {% endif %}
+
   {% for message in messages %}
   <p>
     {{ message.username }} ({{ message.sent_at }}):

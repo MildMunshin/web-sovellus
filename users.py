@@ -9,7 +9,7 @@ def get_user(user_id):
 
 #pitäisikö tämä olla songs_repositoriossa? tai toisinpäin?
 def get_song(id):
-    sql = """SELECT user_id, title, artist, audio_file_path, image_file_path, genre
+    sql = """SELECT id, user_id, title, artist, audio_file_path, image_file_path, genre
              FROM songs
              WHERE id = ?"""
     result = db.query(sql, [id])

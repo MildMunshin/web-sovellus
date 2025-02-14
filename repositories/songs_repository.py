@@ -27,3 +27,16 @@ def get_user_songs(user):
 
     connection.close()
     return songs
+
+def delete_song_from_db(id):
+    sql = "DELETE FROM songs WHERE id = ?"
+    db.execute(sql, [id])
+
+# def delete_song_from_db(id):
+#     connection = sqlite3.connect("database.db")
+#     cursor = connection.cursor()
+
+#     cursor.execute("DELETE FROM songs WHERE id = ?", (id,))  # Huomaa pilkku tuple-muodossa
+#     connection.commit()  # Tallennetaan muutokset
+
+#     connection.close()
