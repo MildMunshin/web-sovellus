@@ -30,3 +30,13 @@ CREATE TABLE messages (
 CREATE TABLE threads (
     id INTEGER PRIMARY KEY
 );
+
+CREATE TABLE likes (
+    id INTEGER PRIMARY KEY,
+    user_id INTEGER NOT NULL,
+    song_id INTEGER NOT NULL,
+    is_like BOOLEAN NOT NULL,                             
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (song_id) REFERENCES songs(id) ON DELETE CASCADE,
+    UNIQUE(user_id, song_id)
+);                          
