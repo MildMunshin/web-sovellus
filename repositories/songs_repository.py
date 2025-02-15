@@ -1,8 +1,7 @@
 import sqlite3
 import db
 
-#Meneekö nämä nyt db.py:n vai suoraan database.db:n kautta? tarkista tämä vielä kuntoon
-#fixaa samanlaiseksi kuin users.py-tiedostossa
+#fixaa samanlaiseksi kuin users.py-tiedostossa sit kun ehdit
 
 def get_songs():
     connection = sqlite3.connect("database.db")
@@ -40,3 +39,13 @@ def delete_song_from_db(id):
 #     connection.commit()  # Tallennetaan muutokset
 
 #     connection.close()
+
+def get_likes(id):
+    sql = "SELECT COUNT(*) FROM likes WHERE song_id = ? AND is_like = 1"
+    result = db.query(sql, [id])  # Assuming db.query() returns fetched data
+    return result[0][0] if result else 0  # Extract the count from the result
+
+def get_dislikes(id):
+    sql = "SELECT COUNT(*) FROM likes WHERE song_id = ? AND is_like = 0"
+    result = db.query(sql, [id])  # Assuming db.query() returns fetched data
+    return result[0][0] if result else 0  # Extract the count from the result

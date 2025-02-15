@@ -4,7 +4,7 @@ from flask import Flask
 from flask import redirect, render_template, request, session, make_response, redirect, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
 import config, db, users, forum
-from repositories.songs_repository import get_songs, get_user_songs, delete_song_from_db
+from repositories.songs_repository import get_songs, get_user_songs, delete_song_from_db, get_likes, get_dislikes
 
 
 app = Flask(__name__)
@@ -88,9 +88,11 @@ def show_song(id):
     song = users.get_song(id)
     thread = forum.get_thread(id)
     messages = forum.get_messages(id)
+    like_counter = get_likes(id)
+    dislike_counter = get_dislikes(id)
 #    if not user:
 #        abort(404)
-    return render_template("show_song.html", song=song, thread=thread, messages=messages)
+    return render_template("show_song.html", song=song, thread=thread, messages=messages, like_counter=like_counter, dislike_counter=dislike_counter)
 
 @app.route("/new_message", methods=["POST"])
 def new_message():
@@ -187,3 +189,42 @@ def upload():
         return redirect(url_for('index'))
 
 
+@app.route("/like/<int:song_id>", methods=["POST"])
+def like_song(song_id):
+    if "user_id" not in session:
+        return redirect(url_for("login_page"))
+
+    user_id = session["user_id"]
+    
+    conn = sqlite3.connect("database.db")
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "INSERT INTO likes (user_id, song_id, is_like) VALUES (?, ?, 1) "
+        "ON CONFLICT(user_id, song_id) DO UPDATE SET is_like = 1",
+        (user_id, song_id)
+    )
+    conn.commit()
+    conn.close()
+
+    return redirect(url_for("show_song", id=song_id))
+
+@app.route("/dislike/<int:song_id>", methods=["POST"])
+def dislike_song(song_id):
+    if "user_id" not in session:
+        return redirect(url_for("login_page"))
+
+    user_id = session["user_id"]
+    
+    conn = sqlite3.connect("database.db")
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "INSERT INTO likes (user_id, song_id, is_like) VALUES (?, ?, 0) "
+        "ON CONFLICT(user_id, song_id) DO UPDATE SET is_like = 0",
+        (user_id, song_id)
+    )
+    conn.commit()
+    conn.close()
+
+    return redirect(url_for("show_song", id=song_id))

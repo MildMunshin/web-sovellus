@@ -22,8 +22,6 @@
     Selaimesi ei tue äänitiedostoja.
   </audio>
 
-  {{ song.id }}
-
   {% if song.user_id == session.user_id %}
   <form action="/delete_song/{{ song.id }}" method="post"
   onsubmit="return confirm('Are you sure you want to delete this song?');">
@@ -31,6 +29,21 @@
   </form>
   {% endif %}
 
+  <br>
+
+  <form action="/like/{{ song.id }}" method="post">
+    <button type="submit">👍 Like</button>
+  </form>
+
+  <p>Likes: {{ like_counter }}</p>
+
+  <form action="/dislike/{{ song.id }}" method="post">
+      <button type="submit">👎 Dislike</button>
+  </form>
+
+  <p>Dislikes: {{ dislike_counter }}</p>
+
+  <h2>Comments:</h2>
   {% for message in messages %}
   <p>
     {{ message.username }} ({{ message.sent_at }}):
