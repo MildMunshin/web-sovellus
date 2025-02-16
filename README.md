@@ -1,8 +1,16 @@
 # Web-sovellus biisinkirjoittajille ja artisteille musiikin jakamiseen
 
-Biisinkirjottajille ja artisteille suunnattu sovellus/sivusto, jossa voi jakaa omia kappaleita, ideoita ja artistiprofiileja.
-Käyttäjät voivat luoda sivustolle profiilin, jossa voivat kertoa tietoja itsestään ja harjottamistaan musiikkityyleistä, seurata muita käyttäjiä, julkaista kappaleita/demoja sekä lisätä profiilissaan linkkejä omille viralliselle artistisivustoilleen tai muihin sosiaalisiin medioihin. Käyttäjät voivat kuunnella, antaa palautetta ja arvioida muiden käyttäjien jakamaa musiikkia. Käyttäjiä ja kappaleita voi etsiä tiettyjen genrejen tai piirteiden avulla. Mahdollisia piirteitä voisivat mm. olla kappaleen tempo, tunnelma, esityskieli, kuuntelukerrat tai arviot.
+Biisinkirjottajille ja artisteille suunnattu sovellus/sivusto, jossa voi jakaa omia kappaleita ja artistiprofiileja.
 
-Sovelluksen tämänhetkinen tila: Käyttäjä voi luoda profiilin, kirjautua sisään ja ladata profiilikuvan. Käyttäjä voi ladata sivustolle kappaleita lomakkeella, johon syötetään tiedot artistista ja kappaleen nimestä, kappaleen äänitiedosto ja kansikuva. Sovelluksen etusivu näyttää kaikki käyttäjien lataamat kappaleet, kappaleiden kansikuvan ja soittimen, jolla ne voidaan toistaa. Käyttäjillä on oma profiilisivu, jossa näkyy kyseisen käyttäjän lataamat kappaleet samaan tapaan. Kappaleilla on myös itsenäiset kappalesivut, joihin pääse linkin kautta kappaleen nimeä klikkaamalla.
+Asennus:
 
-Sovelluksesta puuttuu vielä mahdollisuus muokata ja poistaa kappaleita sekä etsiä ja järjestää tietokohteita hakusanojen avulla. Näiden toiminnallisuuksien lisäksi tarkoitus olisi myös lisätä mahdollisuus käyttäjille lisätä tietoja omalle profiilisivulle/bioon, keskustelualusta kappalesivuille kommentointia ja palautetta/arvioita varten sekä erinäisiä tilastoja (toistokerrat jne.). Myöskään asettelua ja tyylejä ei ole vielä sovelluksessa juurikaan. 
+- Asenna ja ota käyttöön Python-virtuaaliympäristö:
+python3 -m venv venv
+source venv/bin/activate
+
+- Asenna flask-kirjasto:
+pip install flask
+
+Sovelluksen tämänhetkinen tila: Käyttäjä voi luoda profiilin, kirjautua sisään ja ladata profiilikuvan. Käyttäjä voi ladata sivustolle kappaleita lomakkeella, johon syötetään tiedot artistista ja kappaleen nimestä, kappaleen äänitiedosto ja kansikuva. Sovelluksen etusivu näyttää kaikki käyttäjien lataamat kappaleet, kappaleiden kansikuvan ja soittimen, jolla ne voidaan toistaa. Käyttäjillä on oma profiilisivu, jossa näkyy kyseisen käyttäjän lataamat kappaleet samaan tapaan. Kappaleilla on myös itsenäiset kappalesivut, joihin pääse linkin kautta kappaleen nimeä klikkaamalla. Käyttäjät voivat kommentoida kappaleita sekä jättää tykkäyksiä ja ei-tykkäyksiä.
+
+Sovelluksesta puuttuu vielä mahdollisuus etsiä ja järjestää tietokohteita hakusanojen avulla, tietojen lisääminen profiilisivulle sekä erinäisiä tilastoja (toistokerrat, vierailut profiilissa jne). 
