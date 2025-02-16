@@ -6,7 +6,7 @@ Biisinkirjottajille ja artisteille suunnattu sovellus/sivusto, jossa voi jakaa o
 
 * Kloonaa repositorio
 
-  ```git clone https://github.com/MildMunshin/web-sovellus.git```
+```git clone https://github.com/MildMunshin/web-sovellus.git```
   
 * Asenna ja ota käyttöön Python-virtuaaliympäristö:
 
