@@ -4,9 +4,11 @@ Biisinkirjottajille ja artisteille suunnattu sovellus/sivusto, jossa voi jakaa o
 
 ## Asennus:
 
-* Kloonaa repositorio
+* Kloonaa repositorio ja siirry juurikansioon
 
 ```git clone https://github.com/MildMunshin/web-sovellus.git```
+
+```cd web-sovellus```
   
 * Asenna ja ota käyttöön Python-virtuaaliympäristö:
 
