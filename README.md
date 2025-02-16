@@ -1,8 +1,8 @@
-## Web-sovellus biisinkirjoittajille ja artisteille musiikin jakamiseen
+# Web-sovellus biisinkirjoittajille ja artisteille musiikin jakamiseen
 
 Biisinkirjottajille ja artisteille suunnattu sovellus/sivusto, jossa voi jakaa omia kappaleita ja artistiprofiileja.
 
-# Asennus:
+## Asennus:
 
 * Kloonaa repositorio
 
