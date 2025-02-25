@@ -31,14 +31,10 @@ def delete_song_from_db(id):
     sql = "DELETE FROM songs WHERE id = ?"
     db.execute(sql, [id])
 
-# def delete_song_from_db(id):
-#     connection = sqlite3.connect("database.db")
-#     cursor = connection.cursor()
-
-#     cursor.execute("DELETE FROM songs WHERE id = ?", (id,))  # Huomaa pilkku tuple-muodossa
-#     connection.commit()  # Tallennetaan muutokset
-
-#     connection.close()
+def search_songs(search_query):
+    sql = "SELECT * FROM songs WHERE artist LIKE ? OR title LIKE ? OR genre LIKE ?"
+    search_term = f"%{search_query}%"
+    return db.query(sql, [search_term, search_term, search_term])
 
 def get_likes(id):
     sql = "SELECT COUNT(*) FROM likes WHERE song_id = ? AND is_like = 1"

@@ -21,6 +21,14 @@
     </ul>
     {% endif %}
 
+    <form method="get" action="/">
+        <input type="text" name="search" placeholder="Search by artist, title, or genre" value="{{ search_query }}">
+        <button type="submit">🔍 Search</button>
+        {% if search_query %}
+        <a href="/" class="reset-btn">❌ Clear search</a>
+        {% endif %}
+    </form>
+
     <h1>All tracks</h1>
     <ul>
         {% for song in songs %}

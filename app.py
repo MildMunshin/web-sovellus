@@ -4,7 +4,7 @@ from flask import Flask
 from flask import redirect, render_template, request, session, make_response, redirect, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
 import config, db, users, forum
-from repositories.songs_repository import get_songs, get_user_songs, delete_song_from_db, get_likes, get_dislikes
+from repositories.songs_repository import get_songs, get_user_songs, delete_song_from_db, get_likes, get_dislikes, search_songs
 
 
 app = Flask(__name__)
@@ -19,8 +19,13 @@ app.config['COVER_FOLDER'] = COVER_FOLDER
 
 @app.route("/")
 def index():
-    songs = get_songs()
-    return render_template("index.html", songs=songs)
+    search_query = request.args.get("search", "").strip()
+
+    if search_query:
+        songs = search_songs(search_query)
+    else:
+        songs = get_songs()
+    return render_template("index.html", songs=songs, search_query=search_query)
 
 @app.route("/login_page")
 def login_page():
