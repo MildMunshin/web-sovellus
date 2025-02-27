@@ -4,6 +4,7 @@ from flask import Flask
 from flask import redirect, render_template, request, session, make_response, redirect, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
 import config, db, users, forum
+from users import add_bio_text
 from repositories.songs_repository import get_songs, get_user_songs, delete_song_from_db, get_likes, get_dislikes, search_songs
 
 
@@ -132,6 +133,19 @@ def add_image():
         users.update_image(user_id, image)
         return redirect("/user/" + str(user_id))
     
+@app.route("/add_bio", methods=["POST"])
+def add_bio():
+    require_login()
+    
+    content = request.form.get("content", "").strip()  # Get content and remove extra spaces
+    user_id = session["user_id"]
+
+    if content:  # Ensure bio is not empty
+        add_bio_text(content, user_id)
+
+    return redirect(f"/user/{user_id}")
+    
+    
 @app.route("/image/<int:user_id>")
 def show_image(user_id):
     image = users.get_image(user_id)
@@ -141,6 +155,7 @@ def show_image(user_id):
     response = make_response(bytes(image))
     response.headers.set("Content-Type", "image/jpeg")
     return response
+
 
 @app.route("/upload_song")
 def upload_song():

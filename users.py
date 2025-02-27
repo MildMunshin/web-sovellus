@@ -1,7 +1,8 @@
 import db
+import sqlite3
 
 def get_user(user_id):
-    sql = """SELECT id, username, image IS NOT NULL has_image
+    sql = """SELECT id, username, image IS NOT NULL has_image, bio, bio IS NOT NULL has_bio
              FROM users
              WHERE id = ?"""
     result = db.query(sql, [user_id])
@@ -37,3 +38,14 @@ def get_image(user_id):
     if result and result[0][0]:  # Tarkistetaan, että tulos ei ole tyhjä ja kuva on olemassa
         return result[0][0]  # Palautetaan binääri-BLOB
     return None  # Jos kuvaa ei ole, palautetaan None
+
+def add_bio_text(content, user_id):
+    connection = sqlite3.connect("database.db")
+    cursor = connection.cursor()
+    
+    cursor.execute(
+        "UPDATE users SET bio = ? WHERE id = ?", (content, user_id)
+    )
+    
+    connection.commit()
+    connection.close()
