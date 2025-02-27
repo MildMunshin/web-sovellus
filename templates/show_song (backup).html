@@ -1,0 +1,78 @@
+
+<!DOCTYPE html>
+<html>
+<body>
+  
+  <p>
+    <a href="/">Home page</a>
+  </p>
+
+  <h1>{{ song.title }}</h1>
+  <img src="{{ url_for('static', filename=song.image_file_path.split('static/')[-1]) }}" alt="Kansikuva" width="100">
+  <strong><a href="/user/{{ song.user_id }}">{{ song.artist }}</a></strong> – {{ song.title }}</a>
+  <br>
+  <audio controls>
+    {% if song.audio_file_path.endswith('.mp3') %}
+    <source src="{{ url_for('static', filename=song.audio_file_path.split('static/')[-1]) }}" type="audio/mpeg">
+    {% elif song.audio_file_path.endswith('.wav') %}
+    <source src="{{ url_for('static', filename=song.audio_file_path.split('static/')[-1]) }}" type="audio/wav">
+    {% else %}
+        <p>Tiedostotyyppi ei tuettu.</p>
+    {% endif %}
+    Selaimesi ei tue äänitiedostoja.
+  </audio>
+
+  {% if song.user_id == session.user_id %}
+  <form action="/delete_song/{{ song.id }}" method="post"
+  onsubmit="return confirm('Are you sure you want to delete this song?');">
+  <button type="submit">🗑 Delete</button>
+  </form>
+  {% endif %}
+
+  <br>
+
+  <form action="/like/{{ song.id }}" method="post">
+    <button type="submit">👍 Like</button>
+  </form>
+
+  <p>Likes: {{ like_counter }}</p>
+
+  <form action="/dislike/{{ song.id }}" method="post">
+      <button type="submit">👎 Dislike</button>
+  </form>
+
+  <p>Dislikes: {{ dislike_counter }}</p>
+
+  <h2>Comments:</h2>
+  {% for message in messages %}
+  <p>
+    {{ message.username }} ({{ message.sent_at }}):
+  </p>
+  <p>
+    {{ message.content }}
+  </p>
+  {% if message.user_id == session.user_id %}
+  <p>
+    <a href="/edit/{{ message.id }}">Muokkaa</a> |
+    <a href="/remove/{{ message.id }}">Poista</a>
+  </p>
+  {% endif %}
+  <hr />
+  {% endfor %}
+
+  {% if session.user_id %}
+  <h2>Uusi viesti</h2>
+
+  <form action="/new_message" method="post">
+    <p>
+      Viesti:<br />
+      <textarea name="content" rows="5" cols="40"></textarea>
+    </p>
+    <input type="hidden" name="thread_id" value="{{ thread.id }}" />
+    <input type="submit" value="Lähetä" />
+  </form>
+  <hr />
+  {% endif %}
+  
+</body>
+

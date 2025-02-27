@@ -47,13 +47,13 @@ body {
 /* Left column */
 .leftcolumn {   
   float: left;
-  width: 40%;
+  width: 34%;
 }
 
 /* Right column */
 .rightcolumn {
   float: left; /* Not ideal, but works */
-  width: 60%;
+  width: 66%;
   background-color: #f1f1f1;
   padding-left: 20px;
   overflow: hidden; /* Helps avoid layout issues */
@@ -63,7 +63,7 @@ body {
   display: grid; /* This is necessary */
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
   gap: 20px;
-  background-color: rgb(255, 171, 185);
+  background-color: rgb(255, 171, 171);
   padding: 20px;
   margin-top: 20px;
   border-radius: 15px;
@@ -102,9 +102,22 @@ body {
   flex-direction: column;
 }
 
-audio {
+.card-songpage {
+  background-color: rgb(255, 171, 171);
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 15px;
+}
+
+.audio1 {
   width: 100%;  /* Makes the player stretch to the container */
   border-radius: 8px;  /* Rounded corners */
+  background-color: #f1f1f1;
+}
+
+.audio2 {
+  width: 100%;  /* Makes the player stretch to the container */
+  border-radius: 0px 0px 8px 8px;  /* Rounded corners */
   background-color: #f1f1f1;
 }
 
@@ -116,6 +129,20 @@ audio {
   margin-bottom: -15px;
 }
 
+.likes {
+  display: flex;
+  align-items: center; /* Ensures vertical alignment */
+  gap: 20px; /* Small spacing between items */
+}
+
+.likes form {
+  display: flex;
+  align-items: center; /* Vertically center the button */
+}
+
+.likes p {
+  margin: 0; /* Remove default margin around paragraphs */
+}
 
 /* Clear floats after the columns */
 .row::after {

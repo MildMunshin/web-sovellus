@@ -140,6 +140,9 @@ def add_bio():
     content = request.form.get("content", "").strip()  # Get content and remove extra spaces
     user_id = session["user_id"]
 
+    # if session["user_id"] != user_id:
+    #     abort(403)
+
     if content:  # Ensure bio is not empty
         add_bio_text(content, user_id)
 
