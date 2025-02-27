@@ -21,7 +21,7 @@ def get_user_songs(user):
 
     user_id = user["id"] if isinstance(user, sqlite3.Row) else user #poimitaan käyttäjä_id sanakirjasta
 
-    cursor.execute("SELECT * FROM songs WHERE user_id = ?", (user_id,))
+    cursor.execute("SELECT * FROM songs WHERE user_id = ? ORDER BY upload_date DESC", (user_id,))
     songs = cursor.fetchall()
 
     connection.close()

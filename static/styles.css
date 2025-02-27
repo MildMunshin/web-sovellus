@@ -23,7 +23,9 @@ body {
 .topnav {
   overflow: hidden;
   background-color: #333;
+  border-radius: 10px;
 }
+
 
 /* Style the topnav links */
 .topnav a {
@@ -45,15 +47,35 @@ body {
 /* Left column */
 .leftcolumn {   
   float: left;
-  width: 75%;
+  width: 40%;
 }
 
 /* Right column */
 .rightcolumn {
-  float: left;
-  width: 25%;
+  float: left; /* Not ideal, but works */
+  width: 60%;
   background-color: #f1f1f1;
   padding-left: 20px;
+  overflow: hidden; /* Helps avoid layout issues */
+}
+
+.grid {
+  display: grid; /* This is necessary */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
+  gap: 20px;
+  background-color: rgb(255, 171, 185);
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 15px;
+}
+
+.grid-header {
+  grid-column: 1 / -1; /* Vie koko rivin */
+  display: flex;
+  justify-content: space-between; /* Otsikko vasemmalle, nappula oikealle */
+  align-items: center;
+  padding-bottom: 0px; /* Lisää tilaa grid-elementtien yläpuolelle */
+  margin-bottom: -25px;
 }
 
 /* Fake image */
@@ -65,10 +87,35 @@ body {
 
 /* Add a card effect for articles */
 .card {
-  background-color: white;
+  background-color: rgb(226, 216, 216);
   padding: 20px;
   margin-top: 20px;
+  border-radius: 15px;
 }
+
+.card2 {
+  background-color: rgb(226, 216, 216);
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+audio {
+  width: 100%;  /* Makes the player stretch to the container */
+  border-radius: 8px;  /* Rounded corners */
+  background-color: #f1f1f1;
+}
+
+.song-info {
+  display: flex;
+  flex-wrap: nowrap; /* Prevent wrapping */
+  gap: 10px; /* Small spacing between artist & title */
+  margin-top: 10px;
+  margin-bottom: -15px;
+}
+
 
 /* Clear floats after the columns */
 .row::after {
