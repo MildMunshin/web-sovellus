@@ -71,9 +71,6 @@
         </form>
         {% endif %}
 
-
-
-
       </div>
     </div>
 
@@ -90,8 +87,8 @@
         </p>
         {% if message.user_id == session.user_id %}
         <p>
-          <a href="/edit/{{ message.id }}">Muokkaa</a> |
-          <a href="/remove/{{ message.id }}">Poista</a>
+          <a href="/edit/{{ message.id }}">Edit</a> |
+          <a href="/remove/{{ message.id }}">Remove</a>
         </p>
         {% endif %}
         <hr />
@@ -112,6 +109,7 @@
     </div>
 
   </div>
-
+</body>
+</html>
 
 
