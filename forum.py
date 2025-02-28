@@ -17,7 +17,7 @@ def get_messages(id):
     sql = """SELECT m.id, m.content, m.sent_at, m.user_id, u.username
              FROM messages m, users u
              WHERE m.user_id = u.id AND m.thread_id = ?
-             ORDER BY m.id"""
+             ORDER BY m.id DESC"""
     return db.query(sql, [id])
 
 def get_message(message_id):
@@ -31,6 +31,10 @@ def get_message(message_id):
 def update_message(message_id, content):
     sql = "UPDATE messages SET content = ? WHERE id = ?"
     db.execute(sql, [content, message_id])
+
+def delete_message(message_id):
+    sql = "DELETE FROM messages WHERE id = ?"
+    db.execute(sql, [message_id])
 
 
 # def get_threads(id):

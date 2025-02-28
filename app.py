@@ -1,7 +1,7 @@
 import sqlite3
 import os
 from flask import Flask
-from flask import redirect, render_template, request, session, make_response, redirect, url_for, abort
+from flask import redirect, render_template, request, session, make_response, redirect, url_for, abort, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 import config, db, users, forum
 from users import add_bio_text
@@ -129,6 +129,23 @@ def edit_message(message_id):
         if new_content:
             forum.update_message(message_id, new_content)
         return redirect("/song/" + str(message["thread_id"]))
+    
+@app.route("/remove/<int:message_id>", methods=["POST", "GET"])
+def delete_message(message_id):
+    require_login()
+
+    message = forum.get_message(message_id)
+    if not message:
+        abort(404)  # Message not found
+
+    if session.get("user_id") != message["user_id"]:
+        abort(403)  # Prevent deleting someone else's message
+
+    forum.delete_message(message_id)
+    flash("Message deleted successfully!", "success")
+    
+    return redirect(f"/song/{message['thread_id']}")
+
 
 def require_login():
     if "user_id" not in session:
