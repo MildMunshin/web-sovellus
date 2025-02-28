@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html>
+<body>
+    <h1>Home page</h1>
+    {% if session.username %}
+    <p>
+      You have logged in as {{ session.username }}
+    </p>
+    <p>
+      <a href="/user/{{ session['user_id'] }}">Profile</a>
+    </p>
+    <p>
+      <a href="/logout">Log out</a>
+    </p>
+    {% else %}
+    <p>Choose option:</p>
+    <ul>
+        <li><a href="/login_page">Login in</a></li>
+        <li><a href="/register">Create new profile</a></li>
+    </ul>
+    {% endif %}
+
+    <form method="get" action="/">
+        <input type="text" name="search" placeholder="Search by artist, title, or genre" value="{{ search_query }}">
+        <button type="submit">🔍 Search</button>
+        {% if search_query %}
+        <a href="/" class="reset-btn">❌ Clear search</a>
+        {% endif %}
+    </form>
+
+    <h1>All tracks</h1>
+    <ul>
+        {% for song in songs %}
+        <li>
+            <img src="{{ song.image_file_path }}" alt="Kansikuva" width="100">
+            <strong><a href="/user/{{ song.user_id }}">{{ song.artist }}</a></strong> – <a href="/song/{{ song.id }}">{{ song.title }}</a>
+            <br>
+            <audio controls>
+                {% if song.audio_file_path.endswith('.mp3') %}
+                    <source src="{{ song.audio_file_path }}" type="audio/mpeg">
+                {% elif song.audio_file_path.endswith('.wav') %}
+                    <source src="{{ song.audio_file_path }}" type="audio/wav">
+                {% else %}
+                    <p>Tiedostotyyppi ei tuettu.</p>
+                {% endif %}
+                Selaimesi ei tue äänitiedostoja.
+            </audio>
+            
+        </li>
+        {% endfor %}
+    </ul>
+    
+
+</body>
+</html>

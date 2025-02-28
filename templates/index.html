@@ -1,56 +1,69 @@
 
 <!DOCTYPE html>
 <html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Musiquefy</title>
+    <link rel="stylesheet" href="../static/styles.css">
+</head>
 <body>
-    <h1>Home page</h1>
-    {% if session.username %}
-    <p>
-      You have logged in as {{ session.username }}
-    </p>
-    <p>
-      <a href="/user/{{ session['user_id'] }}">Profile</a>
-    </p>
-    <p>
-      <a href="/logout">Log out</a>
-    </p>
-    {% else %}
-    <p>Choose option:</p>
-    <ul>
-        <li><a href="/login_page">Login in</a></li>
-        <li><a href="/register">Create new profile</a></li>
-    </ul>
-    {% endif %}
 
-    <form method="get" action="/">
-        <input type="text" name="search" placeholder="Search by artist, title, or genre" value="{{ search_query }}">
-        <button type="submit">🔍 Search</button>
-        {% if search_query %}
-        <a href="/" class="reset-btn">❌ Clear search</a>
+    <div class="header">
+        <h1>Musiquefy</h1>
+        <p><i>Let The World Hear Your Sound</i></p>
+    </div>
+
+    <div class="topnav-mainpage">
+        <a href="/">Home</a>
+        <a href="/user/{{ session['user_id'] }}">Profile</a>
+        <a href="/upload_song">Upload Song</a>
+        {% if session.username %}
+        <a href="/logout" style="float:right">Logout</a>
+        {% else %}
+        <a href="/login_page" style="float:right">Login</a>
+        <a href="/register" style="float:right">Create new profile</a>
         {% endif %}
-    </form>
-
-    <h1>All tracks</h1>
-    <ul>
-        {% for song in songs %}
-        <li>
-            <img src="{{ song.image_file_path }}" alt="Kansikuva" width="100">
-            <strong><a href="/user/{{ song.user_id }}">{{ song.artist }}</a></strong> – <a href="/song/{{ song.id }}">{{ song.title }}</a>
-            <br>
-            <audio controls>
-                {% if song.audio_file_path.endswith('.mp3') %}
-                    <source src="{{ song.audio_file_path }}" type="audio/mpeg">
-                {% elif song.audio_file_path.endswith('.wav') %}
-                    <source src="{{ song.audio_file_path }}" type="audio/wav">
-                {% else %}
-                    <p>Tiedostotyyppi ei tuettu.</p>
-                {% endif %}
-                Selaimesi ei tue äänitiedostoja.
-            </audio>
-            
-        </li>
-        {% endfor %}
-    </ul>
+    </div>
     
+    <div class="extra-bar-mainpage">
+        {% if session.username %}
+            <p>You have logged in as {{ session.username }}</p>
+        {% endif %}
+        <form method="get" action="/">
+            <input type="text" name="search" placeholder="Search by artist, title, or genre" value="{{ search_query }}" size="25">
+            <button type="submit">🔍 Search</button>
+            {% if search_query %}
+            <a href="/" class="reset-btn">Clear search</a>
+            {% endif %}
+        </form>
+    </div>
+
+    <div class="row">
+        <div class="column-mainpage">
+            <div class="grid">
+                {% for song in songs %}
+                <div class="card2">
+                    <img src="{{ url_for('static', filename=song.image_file_path.split('static/')[-1]) }}" alt="Kansikuva" width="100%">       
+                    <div class="song-info">
+                        <strong>{{ song.artist }}</strong> - <a href="/song/{{ song.id }}">{{ song.title }}</a>
+                    </div> 
+                    <p>Genre: {{ song.genre }}</p>
+                    <audio controls class="audio1">
+                        {% if song.audio_file_path.endswith('.mp3') %}
+                        <source src="{{ url_for('static', filename=song.audio_file_path.split('static/')[-1]) }}" type="audio/mpeg">
+                        {% elif song.audio_file_path.endswith('.wav') %}
+                        <source src="{{ url_for('static', filename=song.audio_file_path.split('static/')[-1]) }}" type="audio/wav">
+                        {% else %}
+                        <p>Tiedostotyyppi ei tuettu.</p>
+                        {% endif %}
+                        Selaimesi ei tue äänitiedostoja.
+                    </audio>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>

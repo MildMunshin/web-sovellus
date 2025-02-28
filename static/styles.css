@@ -12,7 +12,7 @@ body {
 .header {
   padding: 30px;
   text-align: center;
-  background: white;
+  background: pink;
 }
 
 .header h1 {
@@ -26,9 +26,26 @@ body {
   border-radius: 10px;
 }
 
+.topnav-mainpage {
+  overflow: hidden;
+  background-color: #333;
+  border-radius: 0px 0px 10px 10px;
+  margin-bottom: 20px;
+}
+
 
 /* Style the topnav links */
 .topnav a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Style the topnav links */
+.topnav-mainpage a {
   float: left;
   display: block;
   color: #f2f2f2;
@@ -41,6 +58,16 @@ body {
 .topnav a:hover {
   background-color: #ddd;
   color: black;
+}
+
+/* Change color on hover */
+.topnav-mainpage a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.extra-bar-mainpage {
+  margin-left: 15px;
 }
 
 /* Create two unequal columns that floats next to each other */
@@ -59,11 +86,18 @@ body {
   overflow: hidden; /* Helps avoid layout issues */
 }
 
+.column-mainpage {
+  float: left; /* Not ideal, but works */
+  width: 100%;
+  background-color: #f1f1f1;
+  overflow: hidden; /* Helps avoid layout issues */
+}
+
 .grid {
-  display: grid; /* This is necessary */
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(275px, 1fr)); /* Responsive grid */
   gap: 20px;
-  background-color: rgb(255, 171, 171);
+  background: rgb(255, 103, 129);
   padding: 20px;
   margin-top: 20px;
   border-radius: 15px;

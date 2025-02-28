@@ -190,8 +190,8 @@ def add_bio():
 @app.route("/image/<int:user_id>")
 def show_image(user_id):
     image = users.get_image(user_id)
-    # if not image:
-    #     abort(404)
+    if not image:
+        abort(404)
 
     response = make_response(bytes(image))
     response.headers.set("Content-Type", "image/jpeg")

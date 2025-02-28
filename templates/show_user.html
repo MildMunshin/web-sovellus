@@ -13,6 +13,7 @@
 
   <div class="topnav">
     <a href="/">Home</a>
+    <a href="/user/{{ session['user_id'] }}">Profile</a>
     <a href="/upload_song">Upload Song</a>
     {% if session.username %}
     <a href="/logout" style="float:right">Logout</a>
@@ -83,7 +84,7 @@
         </div>
         {% for song in songs %}
         <div class="card2">
-          <img src="{{ url_for('static', filename=song.image_file_path.split('static/')[-1]) }}" alt="Kansikuva" width="150">
+          <img src="{{ url_for('static', filename=song.image_file_path.split('static/')[-1]) }}" alt="Kansikuva" width="100%" height="auto">
     
           <div class="song-info">
             <strong>{{ song.artist }}</strong> - <a href="/song/{{ song.id }}">{{ song.title }}</a>
