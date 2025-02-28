@@ -20,7 +20,17 @@ def get_messages(id):
              ORDER BY m.id"""
     return db.query(sql, [id])
 
+def get_message(message_id):
+    sql = """SELECT m.id, m.content, m.sent_at, m.user_id, u.username, m.thread_id
+             FROM messages m
+             JOIN users u ON m.user_id = u.id
+             WHERE m.id = ?"""
+    result = db.query(sql, [message_id])
+    return result[0] if result else None  # Return None if no message is found
 
+def update_message(message_id, content):
+    sql = "UPDATE messages SET content = ? WHERE id = ?"
+    db.execute(sql, [content, message_id])
 
 
 # def get_threads(id):

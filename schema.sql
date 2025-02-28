@@ -31,7 +31,6 @@ CREATE TABLE messages (
 CREATE TABLE threads (
     id INTEGER PRIMARY KEY
 );
-
 CREATE TABLE likes (
     id INTEGER PRIMARY KEY,
     user_id INTEGER NOT NULL,

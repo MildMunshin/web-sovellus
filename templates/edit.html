@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Message</title>
+</head>
+<body>
+    <h1>Edit Message</h1>
+    <form action="/edit/{{ message.id }}" method="POST">
+        <textarea name="content">{{ message.content }}</textarea>
+        <br>
+        <button type="submit">Save</button>
+    </form>
+    <a href="/song/{{ message.thread_id }}">Cancel</a>
+</body>
+</html>

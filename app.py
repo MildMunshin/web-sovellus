@@ -1,7 +1,7 @@
 import sqlite3
 import os
 from flask import Flask
-from flask import redirect, render_template, request, session, make_response, redirect, url_for
+from flask import redirect, render_template, request, session, make_response, redirect, url_for, abort
 from werkzeug.security import generate_password_hash, check_password_hash
 import config, db, users, forum
 from users import add_bio_text
@@ -108,6 +108,27 @@ def new_message():
 
     forum.add_message(content, user_id, thread_id)
     return redirect("/song/" + str(thread_id))
+
+@app.route("/edit/<int:message_id>", methods=["GET", "POST"])
+def edit_message(message_id):
+    require_login()  # Ensure user is logged in
+    
+    message = forum.get_message(message_id)
+    if not message:
+        abort(404)  # Message not found
+
+    user_id = session.get("user_id")
+    if message["user_id"] != user_id:
+        abort(403)  # Prevent editing someone else's message
+
+    if request.method == "GET":
+        return render_template("edit.html", message=message)
+
+    if request.method == "POST":
+        new_content = request.form["content"].strip()
+        if new_content:
+            forum.update_message(message_id, new_content)
+        return redirect("/song/" + str(message["thread_id"]))
 
 def require_login():
     if "user_id" not in session:
