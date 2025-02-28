@@ -8,7 +8,7 @@ def get_songs():
     connection.row_factory = sqlite3.Row #sanakirjamuodossa
     cursor = connection.cursor()
 
-    cursor.execute("SELECT * FROM songs")
+    cursor.execute("SELECT * FROM songs ORDER BY RANDOM()")
     songs = cursor.fetchall()
 
     connection.close()
