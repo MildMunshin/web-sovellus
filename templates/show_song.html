@@ -86,7 +86,7 @@
         <h2>Comments:</h2>
         {% for message in messages %}
         <p>
-          <a href="/user/{{ song.user_id }}">{{ message.username }}</a> ({{ message.sent_at }}):
+          <a href="/user/{{ message.user_id }}">{{ message.username }}</a> ({{ message.sent_at }}):
         </p>
         <p>
           {{ message.content }}
