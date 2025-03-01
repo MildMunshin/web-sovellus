@@ -17,7 +17,7 @@ def get_messages(id):
     sql = """SELECT m.id, m.content, m.sent_at, m.user_id, u.username
              FROM messages m, users u
              WHERE m.user_id = u.id AND m.thread_id = ?
-             ORDER BY m.id DESC"""
+             ORDER BY m.id"""
     return db.query(sql, [id])
 
 def get_message(message_id):

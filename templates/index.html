@@ -16,8 +16,13 @@
 
     <div class="topnav-mainpage">
         <a href="/">Home</a>
+        {% if session.username%}
         <a href="/user/{{ session['user_id'] }}">Profile</a>
         <a href="/upload_song">Upload Song</a>
+        {% else %}
+        <a href="/login_page">Profile</a>
+        <a href="/login_page">Upload Song</a>
+        {% endif %}
         {% if session.username %}
         <a href="/logout" style="float:right">Logout</a>
         {% else %}

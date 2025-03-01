@@ -26,7 +26,7 @@
   <div class="row">
 
     <div class="leftcolumn">
-      <div class="card">
+      <div class="card-profile-left">
         <h1>{{ user.username }}</h1>
         {% if user.has_image %}
         <img src="/image/{{ user.id }}" height="400"/>
@@ -77,13 +77,19 @@
     </div>
     
     <div class="rightcolumn">
-      <div class="grid">
+      <div class="grid-profile">
         <div class="grid-header">
           <h2>{{ user.username }}'s Songs</h2>
-          <button class="search-button">🔍 Search</button>
+          <form method="get" action="/user/{{ user.id }}">
+            <input type="text" name="search" placeholder="Search by artist, title, or genre" value="{{ search_query }}" size="25">
+            <button type="submit">🔍 Search</button>
+            {% if search_query %}
+                <a href="/user/{{ user.id }}" class="reset-btn">Clear search</a>
+            {% endif %}
+          </form>        
         </div>
         {% for song in songs %}
-        <div class="card2">
+        <div class="card-profile-right">
           <img src="{{ url_for('static', filename=song.image_file_path.split('static/')[-1]) }}" alt="Kansikuva" width="100%" height="auto">
     
           <div class="song-info">

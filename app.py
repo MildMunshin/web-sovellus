@@ -5,7 +5,7 @@ from flask import redirect, render_template, request, session, make_response, re
 from werkzeug.security import generate_password_hash, check_password_hash
 import config, db, users, forum
 from users import add_bio_text
-from repositories.songs_repository import get_songs, get_user_songs, delete_song_from_db, get_likes, get_dislikes, search_songs
+from repositories.songs_repository import get_songs, get_user_songs, delete_song_from_db, get_likes, get_dislikes, search_songs, search_user_songs
 
 
 app = Flask(__name__)
@@ -84,10 +84,20 @@ def logout():
 @app.route("/user/<int:user_id>")
 def show_user(user_id):
     user = users.get_user(user_id)
-    songs = get_user_songs(user)
+
     if not user:
         abort(404)
-    return render_template("show_user.html", user=user, songs=songs)
+
+    search_query = request.args.get("search", "").strip()
+
+    if search_query:
+        songs = search_user_songs(search_query, user["id"])
+    else:
+        songs = get_user_songs(user)
+
+
+    return render_template("show_user.html", user=user, songs=songs, search_query=search_query)
+
 
 @app.route("/song/<int:id>")
 def show_song(id):

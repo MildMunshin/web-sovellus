@@ -36,6 +36,16 @@ def search_songs(search_query):
     search_term = f"%{search_query}%"
     return db.query(sql, [search_term, search_term, search_term])
 
+def search_user_songs(search_query, user_id):
+    sql = """
+        SELECT * FROM songs 
+        WHERE user_id = ? 
+        AND (artist LIKE ? OR title LIKE ? OR genre LIKE ?)
+    """
+    search_term = f"%{search_query}%"
+    return db.query(sql, [user_id, search_term, search_term, search_term])
+
+
 def get_likes(id):
     sql = "SELECT COUNT(*) FROM likes WHERE song_id = ? AND is_like = 1"
     result = db.query(sql, [id])  # Assuming db.query() returns fetched data
