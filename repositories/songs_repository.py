@@ -1,8 +1,6 @@
 import sqlite3
 import db
 
-#fixaa samanlaiseksi kuin users.py-tiedostossa sit kun ehdit
-
 def get_songs():
     connection = sqlite3.connect("database.db")
     connection.row_factory = sqlite3.Row #sanakirjamuodossa
@@ -55,10 +53,10 @@ def search_user_songs(search_query, user_id):
 
 def get_likes(id):
     sql = "SELECT COUNT(*) FROM likes WHERE song_id = ? AND is_like = 1"
-    result = db.query(sql, [id])  # Assuming db.query() returns fetched data
+    result = db.query(sql, [id])
     return result[0][0] if result else 0  # Extract the count from the result
 
 def get_dislikes(id):
     sql = "SELECT COUNT(*) FROM likes WHERE song_id = ? AND is_like = 0"
-    result = db.query(sql, [id])  # Assuming db.query() returns fetched data
+    result = db.query(sql, [id])
     return result[0][0] if result else 0  # Extract the count from the result
