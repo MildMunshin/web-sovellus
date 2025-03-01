@@ -51,7 +51,7 @@
                 <div class="card2">
                     <img src="{{ url_for('static', filename=song.image_file_path.split('static/')[-1]) }}" alt="Kansikuva" width="100%">       
                     <div class="song-info">
-                        <strong>{{ song.artist }}</strong> - <a href="/song/{{ song.id }}">{{ song.title }}</a>
+                        <strong><a href="/user/{{ song.user_id }}">{{ song.artist }}</a></strong> - <a href="/song/{{ song.id }}">{{ song.title }}</a>
                     </div> 
                     <p>Genre: {{ song.genre }}</p>
                     <audio controls class="audio1">
