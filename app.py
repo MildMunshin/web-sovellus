@@ -5,7 +5,7 @@ from flask import redirect, render_template, request, session, make_response, re
 from werkzeug.security import generate_password_hash, check_password_hash
 import config, db, users, forum
 from users import add_bio_text
-from repositories.songs_repository import get_songs, get_user_songs, delete_song_from_db, get_likes, get_dislikes, search_songs, search_user_songs
+from repositories.songs_repository import get_songs, get_user_songs, get_song, delete_song_from_db, get_likes, get_dislikes, search_songs, search_user_songs
 
 
 app = Flask(__name__)
@@ -101,7 +101,7 @@ def show_user(user_id):
 
 @app.route("/song/<int:id>")
 def show_song(id):
-    song = users.get_song(id)
+    song = get_song(id)
     thread = forum.get_thread(id)
     messages = forum.get_messages(id)
     like_counter = get_likes(id)

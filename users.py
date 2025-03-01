@@ -8,14 +8,6 @@ def get_user(user_id):
     result = db.query(sql, [user_id])
     return result[0] if result else None
 
-#siirrä tämä songs-repositorioon kun ehdit
-def get_song(id):
-    sql = """SELECT id, user_id, title, artist, audio_file_path, image_file_path, genre
-             FROM songs
-             WHERE id = ?"""
-    result = db.query(sql, [id])
-    return result[0] if result else None
-
 def get_messages(user_id):
     sql = """SELECT m.id,
                     m.thread_id,

@@ -27,6 +27,13 @@ def get_user_songs(user):
     connection.close()
     return songs
 
+def get_song(id):
+    sql = """SELECT id, user_id, title, artist, audio_file_path, image_file_path, genre
+             FROM songs
+             WHERE id = ?"""
+    result = db.query(sql, [id])
+    return result[0] if result else None
+
 def delete_song_from_db(id):
     sql = "DELETE FROM songs WHERE id = ?"
     db.execute(sql, [id])

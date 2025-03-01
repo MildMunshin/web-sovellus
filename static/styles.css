@@ -137,13 +137,6 @@ body {
   border-radius: 15px;
 }
 
-.card-profile-left {
-  background-color: pink;
-  padding: 20px;
-  margin-top: 20px;
-  border-radius: 15px;
-}
-
 .card2 {
   background-color: rgb(226, 216, 216);
   padding: 20px;
@@ -152,6 +145,13 @@ body {
   display: flex;
   flex-direction: column;
   max-width: 340px;
+}
+
+.card-profile-left {
+  background-color: pink;
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 15px;
 }
 
 .card-profile-right {
