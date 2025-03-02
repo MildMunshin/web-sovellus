@@ -22,8 +22,12 @@ Biisinkirjottajille ja artisteille suunnattu sovellus/sivusto, jossa voi jakaa o
 
 ```flask run```
 
+* Kokeile sovellusta testiprofiileilla (vapaaehtoinen):
+
+```Username: MirrohMirroh, Salasana: mirroh123```
+
+```Username: CyberGirl, Salasana: CG123```
+
 ## Sovelluksen tämänhetkinen tila: 
 
-Käyttäjä voi luoda profiilin, kirjautua sisään ja ladata profiilikuvan. Käyttäjä voi ladata sivustolle kappaleita lomakkeella, johon syötetään tiedot artistista ja kappaleen nimestä, kappaleen äänitiedosto ja kansikuva. Sovelluksen etusivu näyttää kaikki käyttäjien lataamat kappaleet, kappaleiden kansikuvan ja soittimen, jolla ne voidaan toistaa. Käyttäjillä on oma profiilisivu, jossa näkyy kyseisen käyttäjän lataamat kappaleet samaan tapaan. Kappaleilla on myös itsenäiset kappalesivut, joihin pääse linkin kautta kappaleen nimeä klikkaamalla. Käyttäjät voivat kommentoida kappaleita sekä jättää tykkäyksiä ja ei-tykkäyksiä.
-
-Sovelluksesta puuttuu vielä mahdollisuus etsiä ja järjestää tietokohteita hakusanojen avulla, tietojen lisääminen profiilisivulle sekä erinäisiä tilastoja (toistokerrat, vierailut profiilissa jne). Tyylit ja kunnollinen ulkoasu puuttuvat vielä.
+Käyttäjä voi luoda profiilin, kirjautua sisään ja ladata profiilikuvan. Käyttäjä voi ladata sivustolle kappaleita lomakkeella, johon syötetään tiedot artistista ja kappaleen nimestä, kappaleen äänitiedosto ja kansikuva. Sovelluksen etusivu näyttää kaikki käyttäjien lataamat kappaleet, kappaleiden kansikuvan ja soittimen, jolla ne voidaan toistaa. Käyttäjillä on oma profiilisivu, jossa näkyy käyttäjän profiiliteksti/bio, profiilikuva, sekä kyseisen käyttäjän lataamat kappaleet. Kappaleilla on myös itsenäiset kappalesivut, joihin pääse linkin kautta kappaleen nimeä klikkaamalla. Käyttäjät voivat kommentoida kappaleita sekä jättää tykkäyksiä ja ei-tykkäyksiä. Käyttäjät voivat myös etsiä kappaleita artistin, kappaleen nimen tai tyylilajin perusteella.
