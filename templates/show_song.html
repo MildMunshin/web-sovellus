@@ -55,12 +55,14 @@
         <div class="likes">
 
           <form action="/like/{{ song.id }}" method="post">
+            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
             <button type="submit">👍 Like</button>
           </form>
 
           <p>Likes: {{ like_counter }}</p>
 
           <form action="/dislike/{{ song.id }}" method="post">
+              <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
               <button type="submit">👎 Dislike</button>
           </form>
 
@@ -108,6 +110,7 @@
             <textarea name="content" rows="5" cols="40"></textarea>
           </p>
           <input type="hidden" name="thread_id" value="{{ thread.id }}" />
+          <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
           <input type="submit" value="Send" />
         </form>
         {% endif %}

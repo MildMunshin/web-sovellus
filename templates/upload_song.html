@@ -4,7 +4,7 @@
 <body>
   <h1>Upload song</h1>
 
-  <form action="/upload" method="POST" enctype="multipart/form-data">
+  <form action="/upload" method="POST" enctype="multipart/form-data">    
     <label for="title">Song title:</label>
     <input type="text" name="title" required><br>
 
@@ -19,7 +19,8 @@
 
     <label for="cover">Cover:</label>
     <input type="file" name="cover" accept="image/*" required><br>
-
+    
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
     <button type="submit">Upload song</button>
 </form>
 

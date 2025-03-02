@@ -3,6 +3,7 @@ import os
 from flask import Flask
 from flask import redirect, render_template, request, session, make_response, redirect, url_for, abort, flash
 from werkzeug.security import generate_password_hash, check_password_hash
+import secrets
 import config, db, users, forum
 from users import add_bio_text
 from repositories.songs_repository import get_songs, get_user_songs, get_song, delete_song_from_db, get_likes, get_dislikes, search_songs, search_user_songs
@@ -42,14 +43,14 @@ def create():
     password1 = request.form["password1"]
     password2 = request.form["password2"]
     if password1 != password2:
-        return "VIRHE: salasanat eivät ole samat"
+        return "ERROR: passwords don't match"
     password_hash = generate_password_hash(password1)
 
     try:
         sql = "INSERT INTO users (username, password_hash) VALUES (?, ?)"
         db.execute(sql, [username, password_hash])
     except sqlite3.IntegrityError:
-        return "VIRHE: tunnus on jo varattu"
+        return "ERROR: username already taken"
 
     return redirect("/")
 
@@ -57,6 +58,8 @@ def create():
 def login():
     username = request.form["username"]
     password = request.form["password"]
+
+
     
     sql = "SELECT password_hash FROM users WHERE username = ?"
     password_hash = db.query(sql, [username])[0][0]
@@ -65,12 +68,15 @@ def login():
     user_id = db.query(sql, [username])[0][0]
     print(user_id)
 
+
+
     if check_password_hash(password_hash, password):
         session["username"] = username
         session["user_id"] = user_id
+        session["csrf_token"] = secrets.token_hex(16)
         return redirect("/")
     else:
-        return "VIRHE: väärä tunnus tai salasana"
+        return "ERROR: wrong username or password"
 
 
 @app.route("/logout")
@@ -106,12 +112,12 @@ def show_song(id):
     messages = forum.get_messages(id)
     like_counter = get_likes(id)
     dislike_counter = get_dislikes(id)
-#    if not user:
-#        abort(404)
     return render_template("show_song.html", song=song, thread=thread, messages=messages, like_counter=like_counter, dislike_counter=dislike_counter)
 
 @app.route("/new_message", methods=["POST"])
 def new_message():
+    require_login()
+    check_csrf()
     content = request.form["content"]
     user_id = session["user_id"]
     thread_id = request.form["thread_id"]
@@ -121,8 +127,6 @@ def new_message():
 
 @app.route("/edit/<int:message_id>", methods=["GET", "POST"])
 def edit_message(message_id):
-    require_login()  # Ensure user is logged in
-    
     message = forum.get_message(message_id)
     if not message:
         abort(404)  # Message not found
@@ -142,8 +146,6 @@ def edit_message(message_id):
     
 @app.route("/remove/<int:message_id>", methods=["POST", "GET"])
 def delete_message(message_id):
-    require_login()
-
     message = forum.get_message(message_id)
     if not message:
         abort(404)  # Message not found
@@ -161,10 +163,14 @@ def require_login():
     if "user_id" not in session:
         abort(403)
 
+def check_csrf():
+    if request.form["csrf_token"] != session["csrf_token"]:
+        abort(403)
+
 @app.route("/add_image", methods=["GET", "POST"])
 def add_image():
     require_login()
-
+    check_csrf()
     if request.method == "GET":
         return render_template("add_image.html")
 
@@ -184,12 +190,12 @@ def add_image():
 @app.route("/add_bio", methods=["POST"])
 def add_bio():
     require_login()
-    
+    check_csrf()
     content = request.form.get("content", "").strip()  # Get content and remove extra spaces
     user_id = session["user_id"]
 
-    # if session["user_id"] != user_id:
-    #     abort(403)
+    if session["user_id"] != user_id:
+        abort(403)
 
     if content:  # Ensure bio is not empty
         add_bio_text(content, user_id)
@@ -218,10 +224,10 @@ def delete_song(id):
     user_id = session["user_id"]
     return redirect("/user/" + str(user_id))
 
-
-
 @app.route('/upload', methods=['POST'])
 def upload():
+    require_login()
+    check_csrf()
     title = request.form['title']
     artist = request.form['artist']
     genre = request.form['genre']
@@ -257,13 +263,17 @@ def upload():
         conn.commit()
         conn.close()
 
-        return redirect(url_for('index'))
+        return redirect("/user/" + str(user_id))
 
 
 @app.route("/like/<int:song_id>", methods=["POST"])
 def like_song(song_id):
+
     if "user_id" not in session:
         return redirect(url_for("login_page"))
+    
+    require_login()
+    check_csrf()
 
     user_id = session["user_id"]
     
@@ -282,8 +292,12 @@ def like_song(song_id):
 
 @app.route("/dislike/<int:song_id>", methods=["POST"])
 def dislike_song(song_id):
+
     if "user_id" not in session:
         return redirect(url_for("login_page"))
+    
+    require_login()
+    check_csrf()
 
     user_id = session["user_id"]
     

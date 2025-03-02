@@ -39,6 +39,7 @@
           <p>
             Choose profile picture: <input type="file" name="image" accept=".jpg" />
           </p>
+          <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
           <input type="submit" value="Upload image" />
         </form>
         {% endif %}
@@ -56,6 +57,7 @@
           <form id="edit-bio-form" action="/add_bio" method="post" style="display: none;">
               <textarea name="content" rows="4" cols="40">{{ user.bio }}</textarea>
               <br>
+              <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
               <input type="submit" value="Save Changes">
           </form>
           {% endif %}
@@ -69,6 +71,7 @@
           <form id="edit-bio-form" action="/add_bio" method="post" style="display: none;">
               <textarea name="content" rows="4" cols="40">{{ user.bio }}</textarea>
               <br>
+              <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
               <input type="submit" value="Save Changes">
           </form>
           {% endif %}
