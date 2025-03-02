@@ -139,6 +139,7 @@ def edit_message(message_id):
         return render_template("edit.html", message=message)
 
     if request.method == "POST":
+        check_csrf()
         new_content = request.form["content"].strip()
         if new_content:
             forum.update_message(message_id, new_content)
@@ -220,6 +221,8 @@ def upload_song():
 
 @app.route("/delete_song/<int:id>", methods=["POST"])
 def delete_song(id):
+    require_login()
+    check_csrf()
     delete_song_from_db(id)
     user_id = session["user_id"]
     return redirect("/user/" + str(user_id))
