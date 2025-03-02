@@ -48,18 +48,21 @@
         
         {% if user.has_bio %}
 
-          <p>{{ user.bio }}</p>
+          <p id="bio-text">{{ user.bio | replace("\n", "<br>") | safe }}</p>
 
           {% if session["user_id"] == user.id %}
           <button onclick="document.getElementById('edit-bio-form').style.display='block'">
             Edit Bio
           </button>
           <form id="edit-bio-form" action="/add_bio" method="post" style="display: none;">
-              <textarea name="content" rows="4" cols="40">{{ user.bio }}</textarea>
-              <br>
-              <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
-              <input type="submit" value="Save Changes">
+
+            <textarea name="content" rows="4" cols="40">{{ user.bio }}</textarea>
+
+            <br>
+            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+            <button type="submit">Save Changes</button>
           </form>
+        
           {% endif %}
 
         {% else %}
@@ -69,10 +72,12 @@
             Edit Bio
           </button>
           <form id="edit-bio-form" action="/add_bio" method="post" style="display: none;">
-              <textarea name="content" rows="4" cols="40">{{ user.bio }}</textarea>
-              <br>
-              <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
-              <input type="submit" value="Save Changes">
+
+            <textarea name="content" rows="4" cols="40">{{ user.bio }}</textarea>
+
+            <br>
+            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+            <button type="submit">Save Changes</button>
           </form>
           {% endif %}
 
